@@ -1,4 +1,4 @@
-package dev.schulte.handlers;
+package dev.schulte.handlers.employee;
 
 import dev.schulte.app.App;
 import io.javalin.http.Context;

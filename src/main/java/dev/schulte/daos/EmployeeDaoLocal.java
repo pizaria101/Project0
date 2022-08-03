@@ -16,14 +16,13 @@ public class EmployeeDaoLocal implements EmployeeDAO{
     public Employee createEmployee(Employee employee) {
         employee.setId(idMaker);
         idMaker++;
-        employeeMap.put(employee.getId(), employee);
+        this.employeeMap.put(employee.getId(), employee);
         return employee;
     }
 
     @Override
     public Employee getEmployeeById(int id) {
-
-        return employeeMap.get(id);
+        return this.employeeMap.get(id);
     }
 
     @Override
@@ -34,15 +33,15 @@ public class EmployeeDaoLocal implements EmployeeDAO{
 
     @Override
     public Employee updateEmployee(Employee employee) {
-        employeeMap.put(employee.getId(), employee);
+        this.employeeMap.put(employee.getId(), employee);
         return employee;
     }
 
     @Override
     public boolean deleteEmployeeById(int id) {
-        Employee employee = employeeMap.remove(id);
+        Employee employee = this.employeeMap.remove(id);
         if(employee == null){
-        return false;
+            return false;
         }
         return true;
     }

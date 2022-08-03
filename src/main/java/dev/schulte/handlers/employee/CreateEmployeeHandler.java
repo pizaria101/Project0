@@ -1,4 +1,4 @@
-package dev.schulte.handlers;
+package dev.schulte.handlers.employee;
 
 import com.google.gson.Gson;
 import dev.schulte.app.App;

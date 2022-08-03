@@ -22,20 +22,17 @@ public class EmployeeServicesImpl implements EmployeeServices{
         if(employee.getLname().length() == 0){
             throw new RuntimeException("Must have a last name");
         }
-
         Employee savedEmployee = this.employeeDAO.createEmployee(employee);
         return savedEmployee;
     }
 
     @Override
     public Employee retrieveEmployeeById(int id) {
-
         return this.employeeDAO.getEmployeeById(id);
     }
 
     @Override
     public List<Employee> getAllEmployees() {
-
         return this.employeeDAO.getAllEmployees();
     }
 
