@@ -4,6 +4,7 @@ import dev.schulte.daos.ExpenseDAO;
 import dev.schulte.entities.Expense;
 import dev.schulte.entities.Status;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ExpenseServicesImpl implements  ExpenseServices{
@@ -42,7 +43,14 @@ public class ExpenseServicesImpl implements  ExpenseServices{
 
     @Override
     public List<Expense> getStatus(Status status) {
-        return this.expenseDAO.getStatus(status);
+        List<Expense> allExpenses = this.getAllExpenses();
+        List<Expense> sortedExpenses = new ArrayList();
+        for(Expense expense : allExpenses){
+            if(expense.getStatus().equals(status)){
+                sortedExpenses.add(expense);
+            }
+        }
+        return sortedExpenses;
     }
 
     @Override
@@ -53,8 +61,11 @@ public class ExpenseServicesImpl implements  ExpenseServices{
         if(expense.getCost() < 0){
             throw new RuntimeException("Request cannot be negative");
         }
-        if(expense.getEmployee() == 0 || expense.getEmployee() < 0){
+        if(expense.getEmployee() <= 0){
             throw new RuntimeException("Request must be made by a valid employee");
+        }
+        if(expense.getStatus() != Status.PENDING){
+            throw new RuntimeException("Request cannot be altered");
         }
         expense.setStatus(Status.PENDING);
         this.expenseDAO.updateExpense(expense);

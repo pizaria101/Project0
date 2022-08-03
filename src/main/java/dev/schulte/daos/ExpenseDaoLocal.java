@@ -16,6 +16,7 @@ public class ExpenseDaoLocal implements ExpenseDAO {
     @Override
     public Expense createExpense(Expense expense) {
         expense.setId(idMaker);
+        // String.format("%.2f",d)
         idMaker++;
         this.expenseMap.put(expense.getId(), expense);
         return expense;
