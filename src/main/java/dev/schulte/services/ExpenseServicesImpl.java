@@ -12,6 +12,7 @@ public class ExpenseServicesImpl implements  ExpenseServices{
     private final ExpenseDAO expenseDAO;
 
     public ExpenseServicesImpl(ExpenseDAO expenseDAO){
+
         this.expenseDAO = expenseDAO;
     }
 
@@ -33,11 +34,13 @@ public class ExpenseServicesImpl implements  ExpenseServices{
 
     @Override
     public Expense retrieveExpenseById(int id) {
+
         return this.expenseDAO.getExpenseById(id);
     }
 
     @Override
     public List<Expense> getAllExpenses() {
+
         return this.expenseDAO.getAllExpenses();
     }
 
@@ -64,10 +67,9 @@ public class ExpenseServicesImpl implements  ExpenseServices{
         if(expense.getEmployee() <= 0){
             throw new RuntimeException("Request must be made by a valid employee");
         }
-        if(expense.getStatus() != Status.PENDING){
+        if(!expense.getStatus().equals(Status.PENDING)){
             throw new RuntimeException("Request cannot be altered");
         }
-        expense.setStatus(Status.PENDING);
         this.expenseDAO.updateExpense(expense);
         return expense;
     }
@@ -75,11 +77,11 @@ public class ExpenseServicesImpl implements  ExpenseServices{
     @Override
     public Expense updateExpenseStatus(int id, Status status) {
         Expense expense = this.expenseDAO.getExpenseById(id);
-        if(expense.getStatus() == Status.APPROVED){
-            throw new RuntimeException("This request has already been approved");
+        if(expense.getStatus().equals(Status.APPROVED)){
+            throw new RuntimeException("Request has already been approved");
         }
-        if(expense.getStatus() == Status.DENIED){
-            throw new RuntimeException("This request has already been denied");
+        if(expense.getStatus().equals(Status.DENIED)){
+            throw new RuntimeException("Request has already been denied");
         }
         expense.setStatus(status);
         return expense;
@@ -88,7 +90,7 @@ public class ExpenseServicesImpl implements  ExpenseServices{
     @Override
     public boolean deleteExpense(int id) {
         Expense expense = this.expenseDAO.getExpenseById(id);
-        if(expense.getStatus() == Status.APPROVED || expense.getStatus() == Status.DENIED){
+        if(expense.getStatus().equals(Status.APPROVED) || expense.getStatus().equals(Status.DENIED)){
             throw new RuntimeException("This request cannot be deleted");
         }
         boolean isSuccessful = this.expenseDAO.deleteExpenseById(id);

@@ -17,14 +17,16 @@ public class UpdateExpenseStatusHandler implements Handler {
             ctx.status(404);
             ctx.result("Could not find reimbursement request");
         }
-        String string = ctx.pathParam("status");
-        getExpense.setStatus(Status.valueOf(string));
-        String expenseJson = ctx.body();
-        Gson gson = new Gson();
-        Expense expense = gson.fromJson(expenseJson, Expense.class);
-        Expense updatedStatus = App.expenseServices.updateExpenseStatus(id, Status.valueOf(string));
-        String json = gson.toJson(updatedStatus);
-        ctx.result(json);
+        if(!getExpense.getStatus().equals(Status.PENDING)){
+            ctx.status(422);
+            ctx.result("Status cannot be changed");
+        }else {
+            String string = ctx.pathParam("status");
+            Gson gson = new Gson();
+            Expense updatedStatus = App.expenseServices.updateExpenseStatus(id, Status.valueOf(string));
+            String json = gson.toJson(updatedStatus);
+            ctx.result(json);
+        }
 
     }
 }
