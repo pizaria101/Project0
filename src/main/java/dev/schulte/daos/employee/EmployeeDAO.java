@@ -1,9 +1,8 @@
-package dev.schulte.daos;
+package dev.schulte.daos.employee;
 
 import dev.schulte.entities.Employee;
 
 import java.util.List;
-import java.util.Map;
 
 public interface EmployeeDAO {
 
@@ -11,12 +10,12 @@ public interface EmployeeDAO {
     Employee createEmployee(Employee employee);
 
     // Read
-    Employee getEmployeeById(int id);
+    Employee getEmployeeById(int employeeId);
     List<Employee> getAllEmployees();
 
     // Update
     Employee updateEmployee(Employee employee);
 
     // Delete
-    boolean deleteEmployeeById(int id);
+    boolean deleteEmployeeById(int employeeId);
 }

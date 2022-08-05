@@ -1,10 +1,9 @@
 package dev.schulte.services;
 
-import dev.schulte.daos.EmployeeDAO;
+import dev.schulte.daos.employee.EmployeeDAO;
 import dev.schulte.entities.Employee;
 
 import java.util.List;
-import java.util.Map;
 
 public class EmployeeServicesImpl implements EmployeeServices{
 
@@ -27,18 +26,20 @@ public class EmployeeServicesImpl implements EmployeeServices{
     }
 
     @Override
-    public Employee retrieveEmployeeById(int id) {
-        return this.employeeDAO.getEmployeeById(id);
+    public Employee retrieveEmployeeById(int employeeId) {
+
+        return this.employeeDAO.getEmployeeById(employeeId);
     }
 
     @Override
     public List<Employee> getAllEmployees() {
+
         return this.employeeDAO.getAllEmployees();
     }
 
     @Override
-    public boolean deleteEmployee(int id) {
-        boolean isSuccessful = this.employeeDAO.deleteEmployeeById(id);
+    public boolean deleteEmployee(int employeeId) {
+        boolean isSuccessful = this.employeeDAO.deleteEmployeeById(employeeId);
         return isSuccessful;
     }
 

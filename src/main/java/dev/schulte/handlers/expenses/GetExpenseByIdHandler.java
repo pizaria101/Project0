@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 public class GetExpenseByIdHandler implements Handler {
     @Override
     public void handle(@NotNull Context ctx) throws Exception {
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        Expense expense = App.expenseServices.retrieveExpenseById(id);
+        int expenseId = Integer.parseInt(ctx.pathParam("expenseId"));
+        Expense expense = App.expenseServices.retrieveExpenseById(expenseId);
         if(expense == null){
             ctx.status(404);
             ctx.result("Could not find expense");

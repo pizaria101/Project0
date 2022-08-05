@@ -1,25 +1,45 @@
 package dev.schulte.daotests;
 
-import dev.schulte.daos.EmployeeDAO;
-import dev.schulte.daos.EmployeeDaoLocal;
+import dev.schulte.daos.employee.EmployeeDAO;
+import dev.schulte.daos.employee.EmployeeDaoLocal;
+import dev.schulte.daos.employee.EmployeeDaoPostgres;
 import dev.schulte.entities.Employee;
+import dev.schulte.utils.ConnectionUtil;
 import org.junit.jupiter.api.*;
 
-import java.util.Arrays;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
-import java.util.Map;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class EmployeeDaoTests {
 
-    static EmployeeDAO employeeDAO = new EmployeeDaoLocal();
+    static EmployeeDAO employeeDAO = new EmployeeDaoPostgres();
+
+    @BeforeAll
+    static void setup(){
+        try(Connection conn = ConnectionUtil.createConnection()){
+            String sql = "create table employee(\n" +
+                    "\temployee_id serial primary key,\n" +
+                    "\tfname varchar(30) not null,\n" +
+                    "\tlname varchar(30) not null\n" +
+                    ");";
+
+            Statement statement = conn.createStatement();
+            statement.execute(sql);
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
 
     @Test
     @Order(1)
     void create_employee_test(){
         Employee employee = new Employee(0,"Tom","Finnegan");
         Employee savedEmployee = employeeDAO.createEmployee(employee);
-        Assertions.assertNotEquals(0,savedEmployee.getId());
+        Assertions.assertNotEquals(0,savedEmployee.getEmployeeId());
     }
 
     @Test
@@ -43,6 +63,7 @@ public class EmployeeDaoTests {
         employeeDAO.updateEmployee(employee2);
         Employee employee = employeeDAO.getEmployeeById(1);
         Assertions.assertEquals("Jason", employee.getFname());
+        System.out.println(employee);
     }
 
     @Test
@@ -50,5 +71,16 @@ public class EmployeeDaoTests {
     void delete_employee_test(){
         boolean result = employeeDAO.deleteEmployeeById(1);
         Assertions.assertTrue(result);
+    }
+
+    @AfterAll
+    static void teardown(){
+        try(Connection connection = ConnectionUtil.createConnection()){
+            String sql = "drop table employee";
+            Statement statement = connection.createStatement();
+            statement.execute(sql);
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
     }
 }

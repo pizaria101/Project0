@@ -1,6 +1,10 @@
 package dev.schulte.entities;
 
 public enum Type {
-    LODGING,TRAVEL,FOOD,MISC
+    lodging,travel,food,misc;
+
+    public static Type fromString(String type){
+        return valueOf(type.toUpperCase());
+    }
     // Case sensitive
 }

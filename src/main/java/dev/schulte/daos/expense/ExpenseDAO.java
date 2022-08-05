@@ -1,4 +1,4 @@
-package dev.schulte.daos;
+package dev.schulte.daos.expense;
 
 import dev.schulte.entities.Expense;
 import dev.schulte.entities.Status;
@@ -9,14 +9,14 @@ public interface ExpenseDAO {
 
     Expense createExpense(Expense expense);
 
-    Expense getExpenseById(int id);
+    Expense getExpenseById(int expenseId);
     List<Expense> getAllExpenses();
     List<Expense> getStatus(Status status);
 
     Expense updateExpense(Expense expense);
-    Expense updateExpenseStatus(int id, Status status);
+    Expense updateExpenseStatus(int expenseId, Status status);
 
-    boolean deleteExpenseById(int id);
+    boolean deleteExpenseById(int expenseId);
 
 
 }

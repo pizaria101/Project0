@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Expense {
 
-    private int id;
+    private int expenseId;
     private double cost;
     private Status status;
     private int employee;
@@ -18,8 +18,8 @@ public class Expense {
 
     }
 
-    public Expense(int id, double cost, Status status, int employee, String description, Type type) {
-        this.id = id;
+    public Expense(int expenseId, double cost, Status status, int employee, String description, Type type) {
+        this.expenseId = expenseId;
         this.cost = cost;
         this.status = status;
         this.employee = employee;
@@ -27,14 +27,14 @@ public class Expense {
         this.type = type;
     }
 
-    public int getId() {
+    public int getExpenseId() {
 
-        return id;
+        return expenseId;
     }
 
-    public void setId(int id) {
+    public void setExpenseId(int expenseId) {
 
-        this.id = id;
+        this.expenseId = expenseId;
     }
 
     public double getCost() {
@@ -90,7 +90,7 @@ public class Expense {
     @Override
     public String toString() {
         return "Expenses{" +
-                "id=" + id +
+                "expenseId=" + expenseId +
                 ", cost=" + cost +
                 ", status=" + status +
                 ", employee=" + employee +
@@ -104,11 +104,11 @@ public class Expense {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Expense expense = (Expense) o;
-        return id == expense.id && Double.compare(expense.cost, cost) == 0 && employee == expense.employee && status == expense.status && description.equals(expense.description) && type == expense.type;
+        return expenseId == expense.expenseId && Double.compare(expense.cost, cost) == 0 && employee == expense.employee && status == expense.status && description.equals(expense.description) && type == expense.type;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, cost, status, employee, description, type);
+        return Objects.hash(expenseId, cost, status, employee, description, type);
     }
 }

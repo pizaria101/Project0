@@ -1,6 +1,6 @@
 package dev.schulte.services;
 
-import dev.schulte.daos.ExpenseDAO;
+import dev.schulte.daos.expense.ExpenseDAO;
 import dev.schulte.entities.Expense;
 import dev.schulte.entities.Status;
 
@@ -33,9 +33,9 @@ public class ExpenseServicesImpl implements  ExpenseServices{
     }
 
     @Override
-    public Expense retrieveExpenseById(int id) {
+    public Expense retrieveExpenseById(int expenseId) {
 
-        return this.expenseDAO.getExpenseById(id);
+        return this.expenseDAO.getExpenseById(expenseId);
     }
 
     @Override
@@ -75,8 +75,8 @@ public class ExpenseServicesImpl implements  ExpenseServices{
     }
 
     @Override
-    public Expense updateExpenseStatus(int id, Status status) {
-        Expense expense = this.expenseDAO.getExpenseById(id);
+    public Expense updateExpenseStatus(int expenseId, Status status) {
+        Expense expense = this.expenseDAO.getExpenseById(expenseId);
         if(expense.getStatus().equals(Status.APPROVED)){
             throw new RuntimeException("Request has already been approved");
         }
@@ -88,12 +88,12 @@ public class ExpenseServicesImpl implements  ExpenseServices{
     }
 
     @Override
-    public boolean deleteExpense(int id) {
-        Expense expense = this.expenseDAO.getExpenseById(id);
+    public boolean deleteExpense(int expenseId) {
+        Expense expense = this.expenseDAO.getExpenseById(expenseId);
         if(expense.getStatus().equals(Status.APPROVED) || expense.getStatus().equals(Status.DENIED)){
             throw new RuntimeException("This request cannot be deleted");
         }
-        boolean isSuccessful = this.expenseDAO.deleteExpenseById(id);
+        boolean isSuccessful = this.expenseDAO.deleteExpenseById(expenseId);
         return isSuccessful;
     }
 }

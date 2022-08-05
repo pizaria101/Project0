@@ -1,6 +1,5 @@
 package dev.schulte.services;
 
-import dev.schulte.entities.Employee;
 import dev.schulte.entities.Expense;
 import dev.schulte.entities.Status;
 
@@ -10,7 +9,7 @@ public interface ExpenseServices {
 
     Expense registerExpense(Expense expense);
 
-    Expense retrieveExpenseById(int id);
+    Expense retrieveExpenseById(int expenseId);
 
     List<Expense> getAllExpenses();
 
@@ -18,7 +17,7 @@ public interface ExpenseServices {
 
     Expense updateExpense(Expense expense);
 
-    Expense updateExpenseStatus(int id, Status status);
+    Expense updateExpenseStatus(int expenseId, Status status);
 
-    boolean deleteExpense(int id);
+    boolean deleteExpense(int expenseId);
 }

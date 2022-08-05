@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 public class UpdateExpenseHandler implements Handler {
     @Override
     public void handle(@NotNull Context ctx) throws Exception {
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        Expense getExpense = App.expenseServices.retrieveExpenseById(id);
+        int expenseId = Integer.parseInt(ctx.pathParam("expenseId"));
+        Expense getExpense = App.expenseServices.retrieveExpenseById(expenseId);
         if(getExpense == null){
             ctx.status(404);
             ctx.result("Could not find reimbursement request");

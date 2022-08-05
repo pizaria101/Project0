@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Employee {
 
-    private int id;
+    private int employeeId;
     private String fname;
     private String lname;
 
@@ -12,20 +12,20 @@ public class Employee {
 
     }
 
-    public Employee(int id, String fname, String lname) {
-        this.id = id;
+    public Employee(int employeeId, String fname, String lname) {
+        this.employeeId = employeeId;
         this.fname = fname;
         this.lname = lname;
     }
 
-    public int getId() {
+    public int getEmployeeId() {
 
-        return id;
+        return employeeId;
     }
 
-    public void setId(int id) {
+    public void setEmployeeId(int employeeId) {
 
-        this.id = id;
+        this.employeeId = employeeId;
     }
 
     public String getFname() {
@@ -51,7 +51,7 @@ public class Employee {
     @Override
     public String toString() {
         return "Employee{" +
-                "id=" + id +
+                "employeeId=" + employeeId +
                 ", fname='" + fname + '\'' +
                 ", lname='" + lname + '\'' +
                 '}';
@@ -62,11 +62,11 @@ public class Employee {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Employee employee = (Employee) o;
-        return id == employee.id && fname.equals(employee.fname) && lname.equals(employee.lname);
+        return employeeId == employee.employeeId && fname.equals(employee.fname) && lname.equals(employee.lname);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, fname, lname);
+        return Objects.hash(employeeId, fname, lname);
     }
 }

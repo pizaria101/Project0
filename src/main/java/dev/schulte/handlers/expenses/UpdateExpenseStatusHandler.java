@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 public class UpdateExpenseStatusHandler implements Handler {
     @Override
     public void handle(@NotNull Context ctx) throws Exception {
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        Expense getExpense = App.expenseServices.retrieveExpenseById(id);
+        int expenseId = Integer.parseInt(ctx.pathParam("expenseId"));
+        Expense getExpense = App.expenseServices.retrieveExpenseById(expenseId);
         if(getExpense == null){
             ctx.status(404);
             ctx.result("Could not find reimbursement request");
@@ -21,9 +21,9 @@ public class UpdateExpenseStatusHandler implements Handler {
             ctx.status(422);
             ctx.result("Status cannot be changed");
         }else {
-            String string = ctx.pathParam("status");
+            String string = ctx.pathParam("status").toUpperCase();
             Gson gson = new Gson();
-            Expense updatedStatus = App.expenseServices.updateExpenseStatus(id, Status.valueOf(string));
+            Expense updatedStatus = App.expenseServices.updateExpenseStatus(expenseId, Status.valueOf(string));
             String json = gson.toJson(updatedStatus);
             ctx.result(json);
         }

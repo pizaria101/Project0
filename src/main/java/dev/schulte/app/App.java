@@ -1,7 +1,9 @@
 package dev.schulte.app;
 
-import dev.schulte.daos.EmployeeDaoLocal;
-import dev.schulte.daos.ExpenseDaoLocal;
+import dev.schulte.daos.employee.EmployeeDaoLocal;
+import dev.schulte.daos.employee.EmployeeDaoPostgres;
+import dev.schulte.daos.expense.ExpenseDaoLocal;
+import dev.schulte.daos.expense.ExpenseDaoPostgres;
 import dev.schulte.handlers.employee.*;
 import dev.schulte.handlers.expenses.*;
 import dev.schulte.services.EmployeeServices;
@@ -12,9 +14,9 @@ import io.javalin.Javalin;
 
 public class App {
 
-    public static EmployeeServices employeeServices = new EmployeeServicesImpl(new EmployeeDaoLocal());
+    public static EmployeeServices employeeServices = new EmployeeServicesImpl(new EmployeeDaoPostgres());
 
-    public static ExpenseServices expenseServices = new ExpenseServicesImpl(new ExpenseDaoLocal());
+    public static ExpenseServices expenseServices = new ExpenseServicesImpl(new ExpenseDaoPostgres());
 
     public static void main(String[] args) {
         Javalin app = Javalin.create();
@@ -33,17 +35,17 @@ public class App {
         DeleteExpenseHandler deleteExpenseHandler = new DeleteExpenseHandler();
 
         app.post("/employees", createEmployeeHandler);
-        app.get("/employees/{id}", getEmployeeByIdHandler);
+        app.get("/employees/{employeeId}", getEmployeeByIdHandler);
         app.get("/employees", getAllEmployeesHandler);
-        app.put("/employees/{id}", updateEmployeeHandler);
-        app.delete("/employees/{id}", deleteEmployeeHandler);
+        app.put("/employees/{employeeId}", updateEmployeeHandler);
+        app.delete("/employees/{employeeId}", deleteEmployeeHandler);
 
         app.post("/expenses", createExpenseHandler);
         app.get("/expenses", getAllExpensesHandler);
-        app.get("/expenses/{id}", getExpenseByIdHandler);
-        app.put("/expenses/{id}", updateExpenseHandler);
-        app.patch("/expenses/{id}/{status}", updateExpenseStatusHandler);
-        app.delete("/expenses/{id}", deleteExpenseHandler);
+        app.get("/expenses/{expenseId}", getExpenseByIdHandler);
+        app.put("/expenses/{expenseId}", updateExpenseHandler);
+        app.patch("/expenses/{expenseId}/{status}", updateExpenseStatusHandler);
+        app.delete("/expenses/{expenseId}", deleteExpenseHandler);
 
         //app.get("/employees/{id}/expenses", null);
         //app.post("/employees/{id}/expenses", null);

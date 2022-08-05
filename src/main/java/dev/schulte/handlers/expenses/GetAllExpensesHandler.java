@@ -20,7 +20,8 @@ public class GetAllExpensesHandler implements Handler {
             String json = gson.toJson(expenses);
             ctx.result(json);
         }else{
-            List<Expense> expenses = App.expenseServices.getStatus(Status.valueOf(status));
+            String status1 = status.toUpperCase();
+            List<Expense> expenses = App.expenseServices.getStatus(Status.valueOf(status1));
             String json = gson.toJson(expenses);
             ctx.result(json);
         }

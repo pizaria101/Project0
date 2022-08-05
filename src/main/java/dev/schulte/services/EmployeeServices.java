@@ -3,17 +3,16 @@ package dev.schulte.services;
 import dev.schulte.entities.Employee;
 
 import java.util.List;
-import java.util.Map;
 
 public interface EmployeeServices {
 
     Employee registerEmployee(Employee employee);
 
-    Employee retrieveEmployeeById(int id);
+    Employee retrieveEmployeeById(int employeeId);
 
     List<Employee> getAllEmployees();
 
-    boolean deleteEmployee(int id);
+    boolean deleteEmployee(int employeeId);
 
     Employee updateEmployee(Employee employee);
 }

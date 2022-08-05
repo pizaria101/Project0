@@ -8,8 +8,8 @@ import org.jetbrains.annotations.NotNull;
 public class DeleteEmployeeHandler implements Handler {
     @Override
     public void handle(@NotNull Context ctx) throws Exception {
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        boolean result = App.employeeServices.deleteEmployee(id);
+        int employeeId = Integer.parseInt(ctx.pathParam("employeeId"));
+        boolean result = App.employeeServices.deleteEmployee(employeeId);
         if(result){
             ctx.status(204);
         }else{

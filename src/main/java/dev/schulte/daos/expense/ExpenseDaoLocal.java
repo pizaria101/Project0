@@ -1,4 +1,4 @@
-package dev.schulte.daos;
+package dev.schulte.daos.expense;
 
 import dev.schulte.entities.Expense;
 import dev.schulte.entities.Status;
@@ -15,16 +15,17 @@ public class ExpenseDaoLocal implements ExpenseDAO {
 
     @Override
     public Expense createExpense(Expense expense) {
-        expense.setId(idMaker);
+        expense.setExpenseId(idMaker);
         // String.format("%.2f",d)
         idMaker++;
-        this.expenseMap.put(expense.getId(), expense);
+        this.expenseMap.put(expense.getExpenseId(), expense);
         return expense;
     }
 
     @Override
-    public Expense getExpenseById(int id) {
-        return this.expenseMap.get(id);
+    public Expense getExpenseById(int expenseId) {
+
+        return this.expenseMap.get(expenseId);
     }
 
     @Override
@@ -47,21 +48,21 @@ public class ExpenseDaoLocal implements ExpenseDAO {
 
     @Override
     public Expense updateExpense(Expense expense) {
-        this.expenseMap.put(expense.getId(), expense);
+        this.expenseMap.put(expense.getExpenseId(), expense);
         return expense;
     }
 
     @Override
-    public Expense updateExpenseStatus(int id, Status status) {
-        Expense expense = this.expenseMap.get(id);
+    public Expense updateExpenseStatus(int expenseId, Status status) {
+        Expense expense = this.expenseMap.get(expenseId);
         expense.setStatus(status);
-        this.expenseMap.put(id, expense);
+        this.expenseMap.put(expenseId, expense);
         return expense;
     }
 
     @Override
-    public boolean deleteExpenseById(int id) {
-        Expense expense = this.expenseMap.remove(id);
+    public boolean deleteExpenseById(int expenseId) {
+        Expense expense = this.expenseMap.remove(expenseId);
         if(expense == null){
             return false;
         }

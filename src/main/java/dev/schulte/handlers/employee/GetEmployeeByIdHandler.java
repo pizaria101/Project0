@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 public class GetEmployeeByIdHandler implements Handler {
     @Override
     public void handle(@NotNull Context ctx) throws Exception {
-        int id = Integer.parseInt(ctx.pathParam("id"));
-        Employee employee = App.employeeServices.retrieveEmployeeById(id);
+        int employeeId = Integer.parseInt(ctx.pathParam("employeeId"));
+        Employee employee = App.employeeServices.retrieveEmployeeById(employeeId);
         if(employee == null){
             ctx.status(404);
             ctx.result("Could not find employee");
