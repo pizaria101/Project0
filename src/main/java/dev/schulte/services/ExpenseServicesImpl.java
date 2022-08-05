@@ -84,6 +84,7 @@ public class ExpenseServicesImpl implements  ExpenseServices{
             throw new RuntimeException("Request has already been denied");
         }
         expense.setStatus(status);
+        this.expenseDAO.updateExpense(expense);
         return expense;
     }
 
