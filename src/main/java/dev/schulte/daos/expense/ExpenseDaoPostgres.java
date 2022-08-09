@@ -16,7 +16,7 @@ public class ExpenseDaoPostgres implements ExpenseDAO{
             String sql = "insert into expense values (default, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setDouble(1, expense.getCost());
-            preparedStatement.setString(2, expense.getStatus().toString());
+            preparedStatement.setString(2, Status.PENDING.toString());
             preparedStatement.setInt(3, expense.getEmployee());
             preparedStatement.setString(4, expense.getDescription());
             preparedStatement.setString(5, expense.getType().toString());
