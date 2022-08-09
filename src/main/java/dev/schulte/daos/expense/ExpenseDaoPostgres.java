@@ -28,6 +28,7 @@ public class ExpenseDaoPostgres implements ExpenseDAO{
 
             int generatedKey = rs.getInt("expense_id");
             expense.setExpenseId(generatedKey);
+            expense.setStatus(Status.PENDING);
             return expense;
 
         }catch (SQLException e){
