@@ -44,7 +44,10 @@ public class ExpenseDaoPostgres implements ExpenseDAO{
             ps.setInt(1, expenseId);
 
             ResultSet rs = ps.executeQuery();
-            rs.next();
+            if (!rs.next())
+            {
+                return null;
+            }
 
             Expense expense = new Expense();
             expense.setExpenseId(rs.getInt("expense_id"));
