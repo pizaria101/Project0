@@ -13,9 +13,13 @@ public class CreateExpenseHandler implements Handler {
         String json = ctx.body();
         Gson gson = new Gson();
         Expense expense = gson.fromJson(json, Expense.class);
-        Expense registeredExpense = App.expenseServices.registerExpense(expense);
-        String expenseJson = gson.toJson(registeredExpense);
-        ctx.status(201);
-        ctx.result(expenseJson);
+        if(expense.getCost() <= 0){
+            ctx.result("Must have a valid reimbursement amount");
+        }else {
+            Expense registeredExpense = App.expenseServices.registerExpense(expense);
+            String expenseJson = gson.toJson(registeredExpense);
+            ctx.status(201);
+            ctx.result(expenseJson);
+        }
     }
 }

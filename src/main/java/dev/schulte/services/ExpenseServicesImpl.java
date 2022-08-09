@@ -24,9 +24,6 @@ public class ExpenseServicesImpl implements  ExpenseServices{
         if(expense.getCost() < 0){
             throw new RuntimeException("Request cannot be negative");
         }
-        if(expense.getEmployee() == 0 || expense.getEmployee() < 0){
-            throw new RuntimeException("Request must be made by a valid employee");
-        }
         expense.setStatus(Status.PENDING);
         this.expenseDAO.createExpense(expense);
         return expense;
@@ -63,9 +60,6 @@ public class ExpenseServicesImpl implements  ExpenseServices{
         }
         if(expense.getCost() < 0){
             throw new RuntimeException("Request cannot be negative");
-        }
-        if(expense.getEmployee() <= 0){
-            throw new RuntimeException("Request must be made by a valid employee");
         }
         if(!expense.getStatus().equals(Status.PENDING)){
             throw new RuntimeException("Request cannot be altered");

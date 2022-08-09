@@ -1,9 +1,11 @@
 package dev.schulte.app;
 
+import com.google.gson.Gson;
 import dev.schulte.daos.employee.EmployeeDaoLocal;
 import dev.schulte.daos.employee.EmployeeDaoPostgres;
 import dev.schulte.daos.expense.ExpenseDaoLocal;
 import dev.schulte.daos.expense.ExpenseDaoPostgres;
+import dev.schulte.entities.Expense;
 import dev.schulte.handlers.employee.*;
 import dev.schulte.handlers.expenses.*;
 import dev.schulte.services.EmployeeServices;
@@ -11,6 +13,10 @@ import dev.schulte.services.EmployeeServicesImpl;
 import dev.schulte.services.ExpenseServices;
 import dev.schulte.services.ExpenseServicesImpl;
 import io.javalin.Javalin;
+import io.javalin.http.Handler;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
 
@@ -47,8 +53,48 @@ public class App {
         app.patch("/expenses/{expenseId}/{status}", updateExpenseStatusHandler);
         app.delete("/expenses/{expenseId}", deleteExpenseHandler);
 
-        //app.get("/employees/{id}/expenses", null);
-        //app.post("/employees/{id}/expenses", null);
+        Handler getAllExpensesByEmployeeId = ctx -> {
+            int employeeId = Integer.parseInt(ctx.pathParam("employeeId"));
+            if (App.employeeServices.retrieveEmployeeById(employeeId) == null){
+                ctx.status(404);
+                ctx.result("Employee not found");
+            }else{
+                Gson gson = new Gson();
+                List<Expense> expenses = App.expenseServices.getAllExpenses();
+                List<Expense> employeeExpense = new ArrayList();
+                for(Expense e : expenses){
+                    if(e.getEmployee() == employeeId){
+                        employeeExpense.add(e);
+                    }
+                }
+                String json = gson.toJson(employeeExpense);
+                ctx.result(json);
+            }
+        };
+
+        app.get("/employees/{employeeId}/expenses", getAllExpensesByEmployeeId);
+
+        Handler createExpenseByEmployeeId = ctx -> {
+            int employeeId = Integer.parseInt(ctx.pathParam("employeeId"));
+            if (App.employeeServices.retrieveEmployeeById(employeeId) == null){
+                ctx.status(404);
+                ctx.result("Employee not found");
+            }else{
+                String json = ctx.body();
+                Gson gson = new Gson();
+                Expense expense = gson.fromJson(json, Expense.class);
+                if(expense.getCost() <= 0){
+                    ctx.result("Must have a valid reimbursement amount");
+                }else {
+                    Expense registeredExpense = App.expenseServices.registerExpense(expense);
+                    String expenseJson = gson.toJson(registeredExpense);
+                    ctx.status(201);
+                    ctx.result(expenseJson);
+                }
+
+            }
+        };
+        app.post("/employees/{employeeId}/expenses", createExpenseByEmployeeId);
 
 
         app.start();
