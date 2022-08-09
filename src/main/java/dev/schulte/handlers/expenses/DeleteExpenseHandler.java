@@ -12,17 +12,16 @@ public class DeleteExpenseHandler implements Handler {
     public void handle(@NotNull Context ctx) throws Exception {
         int expenseId = Integer.parseInt(ctx.pathParam("expenseId"));
         Expense getExpense = App.expenseServices.retrieveExpenseById(expenseId);
-        if(getExpense.getStatus() == Status.APPROVED || getExpense.getStatus() == Status.DENIED){
+        if(getExpense == null){
+            ctx.status(404);
+            ctx.result("Could not find request");
+        }else if(getExpense.getStatus() == Status.APPROVED || getExpense.getStatus() == Status.DENIED){
             ctx.status(422);
             ctx.result("Request cannot be deleted");
             return;
-        }
-        boolean result = App.expenseServices.deleteExpense(expenseId);
-        if(result){
-            ctx.status(200);
         }else{
-            ctx.status(404);
-            ctx.result("Could not find request");
+        boolean result = App.expenseServices.deleteExpense(expenseId);
+            ctx.status(200);
         }
     }
 }

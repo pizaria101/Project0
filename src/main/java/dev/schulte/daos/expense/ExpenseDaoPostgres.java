@@ -16,10 +16,10 @@ public class ExpenseDaoPostgres implements ExpenseDAO{
             String sql = "insert into expense values (default, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setDouble(1, expense.getCost());
-            preparedStatement.setString(2, expense.getStatus().name());
+            preparedStatement.setString(2, expense.getStatus().toString());
             preparedStatement.setInt(3, expense.getEmployee());
             preparedStatement.setString(4, expense.getDescription());
-            preparedStatement.setString(5, expense.getType().name());
+            preparedStatement.setString(5, expense.getType().toString());
 
             preparedStatement.execute();
 
@@ -123,10 +123,10 @@ public class ExpenseDaoPostgres implements ExpenseDAO{
             String sql = "update expense set expense_cost = ?, status = ?, employee = ?, description = ?, expense_type = ? where expense_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setDouble(1, expense.getCost());
-            preparedStatement.setString(2, expense.getStatus().name());
+            preparedStatement.setString(2, expense.getStatus().toString());
             preparedStatement.setInt(3, expense.getEmployee());
             preparedStatement.setString(4, expense.getDescription());
-            preparedStatement.setString(5, expense.getType().name());
+            preparedStatement.setString(5, expense.getType().toString());
             preparedStatement.setInt(6, expense.getExpenseId());
 
             preparedStatement.executeUpdate();
@@ -143,7 +143,7 @@ public class ExpenseDaoPostgres implements ExpenseDAO{
         try(Connection conn = ConnectionUtil.createConnection()){
             String sql = "update expense set status = ? where expense_id = ?";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, status.name());
+            ps.setString(1, status.toString());
             ps.setInt(2, expenseId);
 
             ps.executeUpdate();

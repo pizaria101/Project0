@@ -41,7 +41,11 @@ public class EmployeeDaoPostgres implements EmployeeDAO{
             ps.setInt(1, employeeId);
 
             ResultSet rs = ps.executeQuery();
-            rs.next();
+            if (!rs.next())
+            {
+                return null;
+            }
+
 
             Employee employee = new Employee();
             employee.setEmployeeId(rs.getInt("employee_id"));
