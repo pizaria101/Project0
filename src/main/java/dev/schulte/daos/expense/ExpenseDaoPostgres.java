@@ -123,14 +123,12 @@ public class ExpenseDaoPostgres implements ExpenseDAO{
     @Override
     public Expense updateExpense(Expense expense) {
         try(Connection connection = ConnectionUtil.createConnection()){
-            String sql = "update expense set expense_cost = ?, status = ?, employee = ?, description = ?, expense_type = ? where expense_id = ?";
+            String sql = "update expense set expense_cost = ?, description = ?, expense_type = ? where expense_id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setDouble(1, expense.getCost());
-            preparedStatement.setString(2, expense.getStatus().toString());
-            preparedStatement.setInt(3, expense.getEmployee());
-            preparedStatement.setString(4, expense.getDescription());
-            preparedStatement.setString(5, expense.getType().toString());
-            preparedStatement.setInt(6, expense.getExpenseId());
+            preparedStatement.setString(2, expense.getDescription());
+            preparedStatement.setString(3, expense.getType().toString());
+            preparedStatement.setInt(4, expense.getExpenseId());
 
             preparedStatement.executeUpdate();
             return expense;

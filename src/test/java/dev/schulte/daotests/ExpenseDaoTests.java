@@ -24,7 +24,7 @@ public class ExpenseDaoTests {
         try(Connection conn = ConnectionUtil.createConnection()){
             String sql = "create table expense(\n" +
                     "expense_id serial primary key,\n" +
-                    "expense_cost decimal(6,2) not null,\n" +
+                    "expense_cost decimal(8,2) not null,\n" +
                     "status varchar(10) not null,\n" +
                     "employee int references employee(employee_id),\n" +
                     "description varchar(100),\n" +
