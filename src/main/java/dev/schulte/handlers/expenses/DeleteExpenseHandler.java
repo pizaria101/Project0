@@ -21,7 +21,7 @@ public class DeleteExpenseHandler implements Handler {
             return;
         }else{
             App.expenseServices.deleteExpense(expenseId);
-            ctx.status(200);
+            ctx.status(204);
         }
     }
 }
