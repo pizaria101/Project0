@@ -20,7 +20,7 @@ public class DeleteExpenseHandler implements Handler {
             ctx.result("Request cannot be deleted");
             return;
         }else{
-        boolean result = App.expenseServices.deleteExpense(expenseId);
+            App.expenseServices.deleteExpense(expenseId);
             ctx.status(200);
         }
     }
